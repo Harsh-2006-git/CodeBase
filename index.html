@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ujjain Map with Zones</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+      #map {
+        height: 600px;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Ujjain City Map - 6 Zones</h2>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+      var map = L.map("map").setView([23.1793, 75.7849], 13);
+
+      // Add OpenStreetMap tiles
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: "&copy; OpenStreetMap contributors",
+      }).addTo(map);
+
+      // Example GeoJSON zones for Ujjain (simplified coordinates)
+      var ujjainZones = [
+        {
+          zone: "Zone 1",
+          color: "#ff0000",
+          coords: [
+            [23.184, 75.78],
+            [23.184, 75.788],
+            [23.178, 75.788],
+            [23.178, 75.78],
+          ],
+        },
+        {
+          zone: "Zone 2",
+          color: "#00ff00",
+          coords: [
+            [23.184, 75.788],
+            [23.184, 75.796],
+            [23.178, 75.796],
+            [23.178, 75.788],
+          ],
+        },
+        {
+          zone: "Zone 3",
+          color: "#0000ff",
+          coords: [
+            [23.178, 75.78],
+            [23.178, 75.788],
+            [23.172, 75.788],
+            [23.172, 75.78],
+          ],
+        },
+        {
+          zone: "Zone 4",
+          color: "#ffff00",
+          coords: [
+            [23.178, 75.788],
+            [23.178, 75.796],
+            [23.172, 75.796],
+            [23.172, 75.788],
+          ],
+        },
+        {
+          zone: "Zone 5",
+          color: "#ff00ff",
+          coords: [
+            [23.172, 75.78],
+            [23.172, 75.788],
+            [23.166, 75.788],
+            [23.166, 75.78],
+          ],
+        },
+        {
+          zone: "Zone 6",
+          color: "#00ffff",
+          coords: [
+            [23.172, 75.788],
+            [23.172, 75.796],
+            [23.166, 75.796],
+            [23.166, 75.788],
+          ],
+        },
+      ];
+
+      // Add zones to map
+      ujjainZones.forEach((zone) => {
+        L.polygon(zone.coords, {
+          color: zone.color,
+          fillOpacity: 0.5,
+        })
+          .addTo(map)
+          .bindPopup(zone.zone);
+      });
+    </script>
+  </body>
+</html>
