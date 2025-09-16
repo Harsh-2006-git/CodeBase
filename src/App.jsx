@@ -46,6 +46,7 @@ function App() {
         <Route path="/lostFound" element={<LostAndFound />} />
         <Route path="/ticket" element={<Ticket />} />
         <Route path="/dencity" element={<Density />} />
+         <Route path="/login" element={<Auth />} />
       </Routes>
     </div>
   );
