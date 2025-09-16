@@ -24,7 +24,7 @@ const __dirname = path.dirname(__filename);
 app.use(
   cors({
     origin: [
-      "http://localhost:3000",
+      "https://ujjain-yatra-harsh09.vercel.app",
       "http://127.0.0.1:3000",
       "http://localhost:5173",
     ], // Add your frontend URLs
