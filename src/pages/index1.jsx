@@ -225,7 +225,7 @@ const HomePage2 = () => {
                     <button
                       onClick={() => {
                         localStorage.removeItem("token");
-                        window.location.href = "/login";
+                        navigate("/login");
                       }}
                       className="w-full text-left px-4 py-2 rounded-lg hover:bg-orange-50 text-gray-700"
                     >
@@ -284,7 +284,7 @@ const HomePage2 = () => {
                 <button
                   onClick={() => {
                     localStorage.removeItem("token");
-                    window.location.href = "/login";
+                    navigate("/login");
                   }}
                   className="w-full text-left px-2 py-2 rounded-lg hover:bg-orange-50 text-gray-700"
                 >
