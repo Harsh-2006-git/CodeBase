@@ -18,7 +18,7 @@ const Dashboard = () => {
   const fetchZoneData = async () => {
     try {
       const response = await fetch(
-        "https://ujjain-yatra-39fh.onrender.com/api/v1/zone/density"
+        "https://ujjain-yatra-harsh-09.onrender.com/api/v1/zone/density"
       );
       const data = await response.json();
       setZones(data.zones || data || []);
@@ -37,7 +37,7 @@ const Dashboard = () => {
 
     try {
       const response = await fetch(
-        "https://ujjain-yatra-39fh.onrender.com/api/v1/zone/scan",
+        "https://ujjain-yatra-harsh-09.onrender.com/api/v1/zone/scan",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -63,7 +63,7 @@ const Dashboard = () => {
   const handleZoneExit = async (unique_code) => {
     try {
       const response = await fetch(
-        "https://ujjain-yatra-39fh.onrender.com/api/v1/zone/scan",
+        "https://ujjain-yatra-harsh-09.onrender.com/api/v1/zone/scan",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
