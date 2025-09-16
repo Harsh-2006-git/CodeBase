@@ -1,12 +1,12 @@
 import * as dotenv from "dotenv";
-import express, { json, response } from "express";
+import express from "express";
 import { connectDB, sequelize } from "./config/database.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import helmet from "helmet";
 import authRoutes from "./routes/authRoutes.js";
 import zoneRoutes from "./routes/ZoneRoutes.js";
-import LostFound from "./routes/lostFoundRoutes.js";
-import TicketRoute from "./routes/ticketRoutes.js";
+import lostFoundRoutes from "./routes/lostFoundRoutes.js";
+import ticketRoutes from "./routes/ticketRoutes.js";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -20,82 +20,71 @@ const PORT = process.env.PORT || 3001;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// CORS configuration - FIX 1: Specify exact origins
+// ✅ CORS configuration
+const allowedOrigins = [
+  "https://ujjainyatra-harsh09.vercel.app", // Vercel frontend
+  "http://127.0.0.1:3000", // Local frontend (React default)
+  "http://localhost:5173", // Vite frontend
+];
+
 app.use(
   cors({
-    origin: [
-      "https://ujjain-yatra-harsh09.vercel.app",
-      "http://127.0.0.1:3000",
-      "http://localhost:5173",
-    ], // Add your frontend URLs
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl)
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: [
-      "Content-Type",
-      "Authorization",
-      "Accept",
-      "Origin",
-      "X-Requested-With",
-    ],
+    allowedHeaders: ["Content-Type", "Authorization", "Accept"],
   })
 );
 
-// Middleware - FIX 2: Correct order
-app.use(json());
-app.use(express.urlencoded({ extended: true })); // Move this up before routes
+// ✅ Handle OPTIONS requests globally (important for preflight)
+app.options("*", cors());
+
+// ✅ Security headers
 app.use(
   helmet({
-    crossOriginResourcePolicy: { policy: "cross-origin" }, // FIX 3: Allow cross-origin resources
+    crossOriginResourcePolicy: false, // Allow serving images/files
   })
 );
 
-// Static file serving - FIX 4: Better path resolution
+// ✅ Body parsers
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// ✅ Static files
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// Add a test route to check if files exist
-app.get("/test-upload/:filename", (req, res) => {
-  const filePath = path.join(__dirname, "uploads", req.params.filename);
-  res.sendFile(filePath, (err) => {
-    if (err) {
-      res.status(404).json({ error: "File not found", path: filePath });
-    }
-  });
-});
-
-// Routes
+// ✅ Test route
 app.get("/", (req, res) => {
-  res.send("hello");
+  res.send("🚀 Ujjain Yatra Backend Running");
 });
 
+// ✅ API Routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/zone", zoneRoutes);
-app.use("/api/v1/lost", LostFound);
-app.use("/api/v1/ticket", TicketRoute);
+app.use("/api/v1/lost", lostFoundRoutes);
+app.use("/api/v1/ticket", ticketRoutes);
 
-// Error handling middleware (should be last)
+// ✅ Error handling middleware (keep last)
 app.use(errorHandler);
 
-// Clean server startup
+// ✅ Start server
 const startServer = async () => {
   try {
     console.log("🔄 Starting server...");
-
-    // Connect to database
     await connectDB();
-
-    // Sync database
     await sequelize.sync({ alter: true });
-    //await sequelize.sync({ force: true });
 
-    // Start server
     app.listen(PORT, "0.0.0.0", () => {
       console.log("✅ Database synchronized");
-      console.log(`🚀 Server running on http://0.0.0.0:${PORT}`);
-      console.log(
-        `📁 Static files served from: ${path.join(__dirname, "uploads")}`
-      );
-      console.log("📧 Email verification system ready");
-      console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+      console.log(`🚀 Server running at http://0.0.0.0:${PORT}`);
+      console.log(`🌐 Allowed origins: ${allowedOrigins.join(", ")}`);
     });
   } catch (error) {
     console.error("❌ Failed to start server:", error.message);
