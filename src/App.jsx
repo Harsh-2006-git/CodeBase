@@ -11,7 +11,7 @@ import Density from "./pages/density";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+  
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -22,6 +22,7 @@ function App() {
   return (
     <div className="app">
       <Routes>
+        {/* Protected Home Route */}
         <Route
           path="/"
           element={
@@ -30,6 +31,8 @@ function App() {
             </ProtectedRoute>
           }
         />
+        
+        {/* Auth Routes - both /auth and /login point to the same component */}
         <Route
           path="/auth"
           element={
@@ -40,13 +43,66 @@ function App() {
             )
           }
         />
-        <Route path="*" element={<Navigate to="/auth" />} />
-        <Route path="/live-darshan" element={<LiveDarshan />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/lostFound" element={<LostAndFound />} />
-        <Route path="/ticket" element={<Ticket />} />
-        <Route path="/dencity" element={<Density />} />
-         <Route path="/login" element={<Auth />} />
+        <Route
+          path="/login"
+          element={
+            isAuthenticated ? (
+              <Navigate to="/" />
+            ) : (
+              <Auth setIsAuthenticated={setIsAuthenticated} />
+            )
+          }
+        />
+
+        {/* Protected Routes */}
+        <Route
+          path="/live-darshan"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <LiveDarshan />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/lostFound"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <LostAndFound />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/ticket"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <Ticket />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dencity"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <Density />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Catch all route - redirect to auth if not authenticated */}
+        <Route 
+          path="*" 
+          element={
+            <Navigate to={isAuthenticated ? "/" : "/auth"} />
+          } 
+        />
       </Routes>
     </div>
   );
