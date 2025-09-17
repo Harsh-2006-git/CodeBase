@@ -17,7 +17,7 @@ const Dashboard = () => {
   // Fetch zone density data
   const fetchZoneData = async () => {
     try {
-      const response = await fetch("http://localhost:3001/api/v1/zone/density");
+      const response = await fetch("https://ujjain-yatra-harsh-09.onrender.com/api/v1/zone/density");
       const data = await response.json();
       setZones(data.zones || data || []);
     } catch (error) {
@@ -34,7 +34,7 @@ const Dashboard = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:3001/api/v1/zone/scan", {
+      const response = await fetch("https://ujjain-yatra-harsh-09.onrender.com/api/v1/zone/scan", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(scanData),
@@ -57,7 +57,7 @@ const Dashboard = () => {
   // Handle zone exit
   const handleZoneExit = async (unique_code) => {
     try {
-      const response = await fetch("http://localhost:3001/api/v1/zone/scan", {
+      const response = await fetch("https://ujjain-yatra-harsh-09.onrender.com/api/v1/zone/scan", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ unique_code }),
