@@ -22,7 +22,8 @@ const __dirname = path.dirname(__filename);
 
 // ✅ Enhanced CORS configuration
 const allowedOrigins = [
-  "https://ujjainyatra-harsh09.vercel.app", // Vercel frontend
+  "https://ujjainyatra-harsh09.vercel.app",
+  "https://ujjain-yatraharsh-098.vercel.app",// Vercel frontend
   "http://127.0.0.1:3000", // Local frontend (React default)
   "http://localhost:3000", // Local frontend (React default)
   "http://localhost:5173", // Vite frontend
