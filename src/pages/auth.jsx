@@ -11,7 +11,7 @@ import {
   Shield,
 } from "lucide-react";
 
-const API_BASE = "https://ujjain-yatra-39fh.onrender.com/api/v1/auth";
+const API_BASE = "http://localhost:3001/api/v1/auth";
 
 // ✅ JWT decode helper
 const decodeJWT = (token) => {

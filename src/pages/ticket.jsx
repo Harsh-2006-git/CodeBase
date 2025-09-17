@@ -60,7 +60,7 @@ const UjjainYatraBooking = () => {
   ];
 
   const API = axios.create({
-    baseURL: "https://ujjain-yatra-39fh.onrender.com/api/v1",
+    baseURL: "http://localhost:3001/api/v1",
   });
 
   // Get JWT token from localStorage

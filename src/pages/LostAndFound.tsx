@@ -57,7 +57,7 @@ const LostAndFound: React.FC = () => {
   const [trackingLoading, setTrackingLoading] = useState(false);
   const [trackingError, setTrackingError] = useState<string | null>(null);
 
-  const BASE_URL = "https://ujjain-yatra-39fh.onrender.com/api/v1";
+  const BASE_URL = "http://localhost:3001/api/v1";
 
   // Fetch lost items
   const fetchItems = async () => {
@@ -373,7 +373,7 @@ const LostAndFound: React.FC = () => {
                   {item.image && (
                     <div className="relative">
                       <img
-                        src={`https://ujjain-yatra-39fh.onrender.com/uploads/${item.image}`}
+                        src={`http://localhost:3001/uploads/${item.image}`}
                         alt={item.title}
                         className="w-full h-64 object-contain bg-gradient-to-b from-orange-50 to-red-50"
                         onError={handleImageError}

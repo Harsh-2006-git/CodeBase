@@ -32,12 +32,9 @@ const ProfileRfidPage = () => {
           return;
         }
 
-        const res = await fetch(
-          "https://ujjain-yatra-39fh.onrender.com/api/v1/auth/profile",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        const res = await fetch("http://localhost:3001/api/v1/auth/profile", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
         if (res.status === 401) {
           localStorage.removeItem("token");
@@ -68,13 +65,10 @@ const ProfileRfidPage = () => {
     setError("");
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(
-        "https://ujjain-yatra-39fh.onrender.com/api/v1/zone/generate",
-        {
-          method: "GET",
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const res = await fetch("http://localhost:3001/api/v1/zone/generate", {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      });
       const data = await res.json();
       if (res.ok) setRfidData(data);
       else setError(data.message || "Failed to generate RFID tag");
