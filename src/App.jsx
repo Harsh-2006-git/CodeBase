@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Auth from "./pages/auth";
 import Home from "./pages/index1";
 import LostAndFound from "./pages/LostAndFound";
@@ -11,7 +11,7 @@ import Density from "./pages/density";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -31,20 +31,10 @@ function App() {
             </ProtectedRoute>
           }
         />
-        
-        {/* Auth Routes - both /auth and /login point to the same component */}
+
+        {/* Auth Route */}
         <Route
           path="/auth"
-          element={
-            isAuthenticated ? (
-              <Navigate to="/" />
-            ) : (
-              <Auth setIsAuthenticated={setIsAuthenticated} />
-            )
-          }
-        />
-        <Route
-          path="/login"
           element={
             isAuthenticated ? (
               <Navigate to="/" />
@@ -88,7 +78,7 @@ function App() {
           }
         />
         <Route
-          path="/dencity"
+          path="/density"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <Density />
@@ -97,11 +87,9 @@ function App() {
         />
 
         {/* Catch all route - redirect to auth if not authenticated */}
-        <Route 
-          path="*" 
-          element={
-            <Navigate to={isAuthenticated ? "/" : "/auth"} />
-          } 
+        <Route
+          path="*"
+          element={<Navigate to={isAuthenticated ? "/" : "/auth"} />}
         />
       </Routes>
     </div>
