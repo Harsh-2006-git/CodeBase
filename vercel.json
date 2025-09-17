@@ -5,6 +5,11 @@
   ],
   "routes": [
     {
+      "src": "/login",
+      "status": 301,
+      "headers": { "Location": "/auth" }
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.html"
     }
