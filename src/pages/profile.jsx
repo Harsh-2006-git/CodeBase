@@ -32,7 +32,7 @@ const ProfileRfidPage = () => {
           return;
         }
 
-        const res = await fetch("http://localhost:3001/api/v1/auth/profile", {
+        const res = await fetch("https://ujjain-yatra-harsh-09.onrender.com/api/v1/auth/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -65,7 +65,7 @@ const ProfileRfidPage = () => {
     setError("");
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:3001/api/v1/zone/generate", {
+      const res = await fetch("https://ujjain-yatra-harsh-09.onrender.com/api/v1/zone/generate", {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
